@@ -18,6 +18,9 @@
   --line:#E6EAF1;
   --ink:#1D2733;
   --muted:#647188;
+  --dotcolor:rgba(59,130,246,0.09);
+  --shadow:0 1px 2px rgba(20,30,50,0.03);
+  --dockshadow:0 10px 26px -12px rgba(20,30,50,0.25);
 
   --blue:#3B82F6;
   --blue-soft:#EAF1FE;
@@ -32,19 +35,44 @@
 
   --radius:10px;
   --maxw:900px;
+  --topbar-bg:rgba(255,255,255,0.9);
+}
+html[data-theme="dark"]{
+  --topbar-bg:rgba(11,15,23,0.85);
+  --bg:#0B0F17;
+  --bg-soft:#121826;
+  --panel:#121826;
+  --line:#232C3D;
+  --ink:#E9EEF6;
+  --muted:#8B99B0;
+  --dotcolor:rgba(96,165,250,0.14);
+  --shadow:0 1px 2px rgba(0,0,0,0.4);
+  --dockshadow:0 10px 26px -12px rgba(0,0,0,0.6);
+
+  --blue:#5B9CFA;
+  --blue-soft:#132038;
+  --teal:#2DD4BF;
+  --teal-soft:#0F2420;
+  --coral:#FF8A7D;
+  --coral-soft:#2A1613;
+  --amber:#F7C065;
+  --amber-soft:#2A2110;
+  --violet:#A78BFA;
+  --violet-soft:#1E1833;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   margin:0;
   background:
-    radial-gradient(circle at 1px 1px, rgba(59,130,246,0.09) 1px, transparent 1px) 0 0/24px 24px,
+    radial-gradient(circle at 1px 1px, var(--dotcolor) 1px, transparent 1px) 0 0/24px 24px,
     var(--bg);
   color:var(--ink);
   font-family:'IBM Plex Sans', sans-serif;
   font-size:16px;
   line-height:1.6;
   overflow-x:hidden;
+  transition:background-color .35s ease, color .35s ease;
 }
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
@@ -97,7 +125,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible{ outline:2px solid 
 .topbar{
   position:sticky; top:0; z-index:200;
   display:flex; align-items:center; justify-content:space-between; gap:16px;
-  padding:14px 22px; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px);
+  padding:14px 22px; background:var(--topbar-bg); backdrop-filter:blur(8px);
+  transition:background-color .35s ease, border-color .35s ease;
   border-bottom:1px solid var(--line);
 }
 .brand{ display:flex; align-items:center; gap:10px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); text-decoration:none; flex-shrink:0;}
@@ -111,11 +140,11 @@ nav.tabs{ display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
 nav.tabs::-webkit-scrollbar{ display:none; }
 nav.tabs button{
   font-family:'IBM Plex Mono',monospace; font-size:12.5px; white-space:nowrap;
-  padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--muted);
+  padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--muted);
   cursor:pointer; transition:all .15s;
 }
 nav.tabs button:hover{ border-color:var(--blue); color:var(--blue); }
-nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:#fff; }
+nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
 
 /* ================= SECTIONS (single view) ================= */
 .view{ max-width:var(--maxw); margin:0 auto; padding:44px 24px 70px; display:none; }
@@ -149,7 +178,8 @@ nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:#f
   font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;
   padding:12px 20px; border-radius:999px; cursor:pointer; text-decoration:none;
   display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line);
-  color:var(--ink); background:#fff; transition:all .15s;
+  color:var(--ink); background:var(--panel); transition:all .15s;
+  position:relative; overflow:hidden;
 }
 .btn:hover{ border-color:var(--ink); transform:translateY(-1px); }
 .btn.primary{ background:var(--blue); color:#fff; border-color:var(--blue); }
@@ -157,7 +187,8 @@ nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:#f
 
 .panel{
   background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-  padding:26px 28px; box-shadow:0 1px 2px rgba(20,30,50,0.03);
+  padding:26px 28px; box-shadow:var(--shadow);
+  transition:background-color .35s ease, border-color .35s ease;
 }
 .about-text p{ margin:0 0 14px; color:var(--ink); max-width:70ch; }
 .about-text p:last-child{ margin-bottom:0; color:var(--muted); }
@@ -172,7 +203,7 @@ nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:#f
 .tl-item ul li{ margin-bottom:5px; }
 
 /* projects */
-.proj-card{ border:1px solid var(--line); border-radius:var(--radius); margin-bottom:14px; overflow:hidden; background:#fff; }
+.proj-card{ border:1px solid var(--line); border-radius:var(--radius); margin-bottom:14px; overflow:hidden; background:var(--panel); transition:background-color .35s ease, border-color .35s ease; }
 .proj-card:last-child{ margin-bottom:0; }
 .proj-card summary{
   list-style:none; cursor:pointer; padding:18px 20px; display:flex; justify-content:space-between; align-items:center; gap:12px;
@@ -216,18 +247,92 @@ nav.tabs button.active{ background:var(--ink); border-color:var(--ink); color:#f
 /* dock (mobile-friendly section switcher, mirrors top tabs) */
 .dock{
   position:fixed; bottom:16px; left:50%; transform:translateX(-50%); z-index:150;
-  display:none; gap:6px; background:#fff; border:1px solid var(--line); border-radius:999px;
-  padding:8px; box-shadow:0 10px 26px -12px rgba(20,30,50,0.25);
+  display:none; gap:6px; background:var(--panel); border:1px solid var(--line); border-radius:999px;
+  padding:8px; box-shadow:var(--dockshadow);
 }
 @media (max-width:680px){
   .topbar nav.tabs{ display:none; }
   .dock{ display:flex; }
 }
 .dock button{
-  width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:#fff;
+  width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--panel);
   display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer;
 }
-.dock button.active{ background:var(--ink); border-color:var(--ink); color:#fff; }
+.dock button.active{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
+
+/* ================= THEME TOGGLE ================= */
+.theme-toggle{
+  width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--panel);
+  color:var(--ink); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:all .2s;
+}
+.theme-toggle:hover{ border-color:var(--blue); transform:rotate(15deg) scale(1.06); }
+.enter-theme-toggle{ position:absolute; top:22px; right:22px; z-index:2; }
+
+/* ================= ENTER SCREEN BLOBS (ambient float) ================= */
+.enter-blobs{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+.blob{
+  position:absolute; border-radius:50%; filter:blur(50px); opacity:.55;
+  animation:drift 14s ease-in-out infinite;
+}
+.blob.b1{ width:260px; height:260px; background:var(--blue-soft); top:-60px; left:-60px; animation-duration:16s; }
+.blob.b2{ width:220px; height:220px; background:var(--teal-soft); bottom:-40px; right:-40px; animation-duration:19s; animation-delay:-4s; }
+.blob.b3{ width:180px; height:180px; background:var(--coral-soft); bottom:20%; left:8%; animation-duration:13s; animation-delay:-8s; }
+@keyframes drift{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  33%{ transform:translate(24px,-18px) scale(1.08); }
+  66%{ transform:translate(-18px,16px) scale(0.95); }
+}
+.enter-card{ position:relative; z-index:1; }
+.enter-badge{ animation:badgePulse 3.2s ease-in-out infinite; }
+@keyframes badgePulse{
+  0%,100%{ box-shadow:0 14px 30px -12px rgba(59,130,246,0.55); }
+  50%{ box-shadow:0 18px 38px -10px rgba(59,130,246,0.8); }
+}
+.enter-btn{ position:relative; }
+.enter-btn::after{
+  content:''; position:absolute; inset:-4px; border-radius:999px; border:1px solid var(--blue);
+  opacity:0; animation:ringPulse 2.4s ease-out infinite;
+}
+@keyframes ringPulse{
+  0%{ opacity:.55; transform:scale(1); }
+  100%{ opacity:0; transform:scale(1.22); }
+}
+
+/* ================= GLITCH TEXT ================= */
+.glitch{ position:relative; display:inline-block; }
+.glitch::before, .glitch::after{
+  content:attr(data-text); position:absolute; left:0; top:0; width:100%; height:100%;
+  background:inherit; opacity:0; pointer-events:none;
+}
+.glitch::before{ color:var(--coral); transform:translate(0,0); mix-blend-mode:screen; }
+.glitch::after{ color:var(--teal); transform:translate(0,0); mix-blend-mode:screen; }
+.glitch.glitching::before{ animation:glitchTop .38s steps(2,end); opacity:.85; }
+.glitch.glitching::after{ animation:glitchBottom .38s steps(2,end); opacity:.85; }
+@keyframes glitchTop{
+  0%{ clip-path:inset(0 0 82% 0); transform:translate(-3px,-1px); }
+  30%{ clip-path:inset(10% 0 55% 0); transform:translate(3px,1px); }
+  60%{ clip-path:inset(45% 0 20% 0); transform:translate(-2px,1px); }
+  100%{ clip-path:inset(0 0 90% 0); transform:translate(0,0); opacity:0; }
+}
+@keyframes glitchBottom{
+  0%{ clip-path:inset(80% 0 0 0); transform:translate(3px,1px); }
+  30%{ clip-path:inset(55% 0 10% 0); transform:translate(-3px,-1px); }
+  60%{ clip-path:inset(20% 0 45% 0); transform:translate(2px,-1px); }
+  100%{ clip-path:inset(90% 0 0 0); transform:translate(0,0); opacity:0; }
+}
+
+/* ================= TAB / VIEW MOTION ================= */
+nav.tabs button{ position:relative; }
+nav.tabs button.active{ animation:tabPop .25s ease; }
+@keyframes tabPop{ from{ transform:scale(0.94); } to{ transform:scale(1); } }
+.dock button.active{ animation:tabPop .25s ease; }
+
+@media (prefers-reduced-motion: reduce){
+  .blob, .enter-badge, .enter-btn::after, .glitch.glitching::before, .glitch.glitching::after, nav.tabs button.active, .dock button.active{
+    animation:none !important;
+  }
+}
 
 footer{
   text-align:center; padding:26px 20px 100px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);
@@ -240,10 +345,16 @@ footer{
 
   <!-- ============ ENTER SCREEN ============ -->
   <div id="enter">
+    <button class="theme-toggle enter-theme-toggle" id="themeToggleEnter" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <span id="themeIconEnter">🌙</span>
+    </button>
+    <div class="enter-blobs" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    </div>
     <div class="enter-card">
       <div class="enter-badge">HK</div>
       <div class="dept mono">B.Tech · Computer Science &amp; Engineering</div>
-      <h1>Harikrishnan K</h1>
+      <h1 class="glitch" data-text="Harikrishnan K">Harikrishnan K</h1>
       <p class="year">AWH Engineering College, Kozhikode · <strong>Batch 2024–2028</strong></p>
       <button class="enter-btn" id="enterBtn" type="button">Enter portfolio →</button>
       <p class="enter-hint">or press Enter ↵</p>
@@ -264,12 +375,15 @@ footer{
         <button data-target="achievements">Achievements</button>
         <button data-target="contact">Contact</button>
       </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+      </button>
     </div>
 
     <!-- ABOUT (name + about me, shown first) -->
     <section class="view active t-blue" id="view-about">
+      <h1 class="hero-name glitch" data-text="Harikrishnan K">Harikrishnan K</h1>
       <div class="eyebrow"><span class="dot"></span>KOZHIKODE, KERALA · OPEN TO INTERNSHIPS</div>
-      <h1 class="hero-name">Harikrishnan K</h1>
       <p class="hero-role mono"><span id="typedRole"></span><span class="cursor"></span></p>
       <p class="pitch">Computer Science Engineering student who likes working close to the hardware — memory systems, embedded sensors, the layer most apps never think about. Currently interning in software development, and building things in Python, C, JavaScript and the occasional microcontroller.</p>
       <div class="cta-row">
@@ -514,6 +628,46 @@ footer{
 
   // ---------- footer year ----------
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- dark mode ----------
+  const root = document.documentElement;
+  const themeIcons = [document.getElementById('themeIcon'), document.getElementById('themeIconEnter')];
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    themeIcons.forEach(el => { if(el) el.textContent = theme === 'dark' ? '☀️' : '🌙'; });
+    try{ localStorage.setItem('hk-theme', theme); }catch(e){}
+  }
+  function currentTheme(){
+    try{
+      const saved = localStorage.getItem('hk-theme');
+      if(saved) return saved;
+    }catch(e){}
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  applyTheme(currentTheme());
+  function toggleTheme(){
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  document.getElementById('themeToggleEnter').addEventListener('click', toggleTheme);
+
+  // ---------- glitch bursts ----------
+  const glitchEls = document.querySelectorAll('.glitch');
+  function burstGlitch(el){
+    if(reduceMotion || !el) return;
+    el.classList.add('glitching');
+    setTimeout(() => el.classList.remove('glitching'), 420);
+  }
+  glitchEls.forEach(el => el.addEventListener('mouseenter', () => burstGlitch(el)));
+  if(!reduceMotion){
+    setInterval(() => {
+      glitchEls.forEach(el => {
+        const view = el.closest('.view, #enter');
+        const visible = view && (view.id === 'enter' ? !appEl.classList.contains('show') : view.classList.contains('active'));
+        if(visible) burstGlitch(el);
+      });
+    }, 6000);
+  }
 </script>
 </body>
 </html>
